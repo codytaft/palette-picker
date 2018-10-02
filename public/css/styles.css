@@ -16,8 +16,11 @@ body {
 }
 
 .color-card {
-  /* display: flex; */
   width: 10rem;
   height: 20rem;
   border: 0.1rem solid white;
+}
+
+input {
+  color: black;
 }
