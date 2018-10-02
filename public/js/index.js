@@ -1,5 +1,9 @@
 $(document).ready(() => {
   getRandomColors();
+  $('.save-palette-btn').click(e => {
+    e.preventDefault();
+    console.log(event.which);
+  });
 });
 
 const getRandomColors = () => {
@@ -21,12 +25,8 @@ const displayColors = colors => {
 };
 
 $(window).keypress(e => {
+  e.preventDefault();
   if (e.which === 32) {
     getRandomColors();
   }
-});
-
-$('.save-palette-btn').click(e => {
-  e.prevent.default();
-  console.log(e.target.value);
 });

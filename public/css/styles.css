@@ -16,7 +16,8 @@ body {
 }
 
 .color-card {
-  display: flex;
-  width: 5rem;
-  height: 5rem;
+  /* display: flex; */
+  width: 10rem;
+  height: 20rem;
+  border: 0.1rem solid white;
 }
