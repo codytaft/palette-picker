@@ -1,15 +1,43 @@
 const express = require('express');
 const app = express();
 
+app.set('port', process.env.PORT || 3000);
+
+app.locals.title = 'Palette Picker';
+app.locals.colors = [
+  { id: 1, color: `#4E1DB7` },
+  { id: 2, color: `#000744` },
+  { id: 3, color: `#0719B7` },
+  { id: 4, color: `#514103` },
+  { id: 5, color: `#AA8D18` }
+];
+app.locals.colors2 = [
+  { id: 1, color: `#ff0000` },
+  { id: 2, color: `#ff0000` },
+  { id: 3, color: `#ff0000` },
+  { id: 4, color: `#ff0000` },
+  { id: 5, color: `#ff0000` }
+];
+
 app.use(express.static('public'));
-app.use(function(req, res) {
-  res.status(404).send(`Sorry can't find that!`);
-});
+// app.use(function(req, res) {
+//   res.status(404).send(`Sorry can't find that!`);
+// });
 
 app.get('/', (request, response) => {
-  repsonse.sendFile(index.html);
+  response.sendFile(index.html);
 });
 
-app.listen(3000, () => {
-  console.log('Palette Picker running on localhost:3000');
+app.get('/api/v1/colors', (request, response) => {
+  response.status(200).json(app.locals.colors);
+});
+
+app.get('/api/v1/colors2', (request, response) => {
+  response.status(200).json(app.locals.colors2);
+});
+
+app.post('api/v1/projects', (request, response) => {});
+
+app.listen(app.get('port'), () => {
+  console.log(`${app.locals.title} running on ${app.get('port')}`);
 });

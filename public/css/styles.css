@@ -6,3 +6,17 @@ body {
   width: 100%;
   text-align: center;
 }
+
+.color-card-display {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.color-card {
+  display: flex;
+  width: 5rem;
+  height: 5rem;
+}
