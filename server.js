@@ -16,19 +16,31 @@ app.locals.palettes = [
   {
     id: 1,
     name: 'warm',
-    colors: ['#def402', '#647eda', '#d71568', '#39658a', '#eac5d'],
+    color1: '#def402',
+    color2: '#647eda',
+    color3: '#d71568',
+    color4: '#39658a',
+    color5: '#eac5d',
     project_id: 1
   },
   {
     id: 2,
     name: 'cool',
-    colors: ['#def402', '#647eda', '#d71568', '#39658a', '#eac5d'],
+    color1: '#def402',
+    color2: '#647eda',
+    color3: '#d71568',
+    color4: '#39658a',
+    color5: '#eac5d',
     project_id: 1
   },
   {
     id: 3,
     name: 'cold',
-    colors: ['#def402', '#647eda', '#d71568', '#39658a', '#eac5d'],
+    color1: '#def402',
+    color2: '#647eda',
+    color3: '#d71568',
+    color4: '#39658a',
+    color5: '#eac5d',
     project_id: 2
   }
 ];

@@ -3,6 +3,7 @@ $(document).ready(() => {
   $('.save-palette-btn').click(e => {
     e.preventDefault();
     savePaletteToProject($('.project').val());
+    console.log();
   });
   $('.dropdown-btn').click(e => {
     e.preventDefault();
