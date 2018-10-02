@@ -24,3 +24,53 @@ body {
 input {
   color: black;
 }
+
+.dropdown-btn {
+  background-color: rgb(177, 121, 121);
+  color: white;
+  /* padding: 1rem; */
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-btn:hover,
+.dropdown-btn:focus {
+  background-color: crimson;
+}
+
+.project-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-projects {
+  padding: 0;
+  display: none;
+  position: absolute;
+  background-color: aqua;
+  width: 100%;
+  overflow: auto;
+  /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+  z-index: 1;
+}
+
+.dropdown-projects li {
+  color: black;
+  width: 100%;
+  /* padding: 3rem 3rem; */
+  text-decoration: none;
+  display: block;
+}
+
+.project-dropdown li:hover {
+  background-color: darkgoldenrod;
+}
+
+.show {
+  display: block;
+}
+
+ul {
+  list-style-type: none;
+}

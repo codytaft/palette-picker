@@ -2,17 +2,22 @@ $(document).ready(() => {
   getRandomColors();
   $('.save-palette-btn').click(e => {
     e.preventDefault();
-    savePaletteToProject();
+    savePaletteToProject($('.project').val());
+  });
+  $('.dropdown-btn').click(e => {
+    e.preventDefault();
+    console.log('hi');
+    $('.dropdown-projects').toggleClass('show');
   });
 });
 
 var newColorArray = [];
 
-const savePaletteToProject = () => {
+const savePaletteToProject = project => {
   console.log(newColorArray);
   fetch('/api/v1/projects', {
     method: 'POST',
-    body: JSON.stringify({ newColorArray }),
+    body: JSON.stringify({ colors: newColorArray }),
     headers: {
       'Content-Type': 'application/json'
     }
