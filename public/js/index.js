@@ -1,18 +1,24 @@
 $(document).ready(() => {
   getRandomColors();
-  $('.save-palette-btn').click(e => {
-    e.preventDefault();
-    savePaletteToProject($('.project').val());
-    console.log();
-  });
-  $('.dropdown-btn').click(e => {
-    e.preventDefault();
-    console.log('hi');
-    $('.dropdown-projects').toggleClass('show');
-  });
+  handleSavePaletteClick();
+  handleDropdownButton();
 });
 
 var newColorArray = [];
+
+const handleSavePaletteClick = () => {
+  $('.save-palette-btn').click(e => {
+    e.preventDefault();
+    savePaletteToProject($('.project').val());
+  });
+};
+
+const handleDropdownButton = () => {
+  $('.dropdown-btn').click(e => {
+    e.preventDefault();
+    $('.dropdown-projects').toggleClass('show');
+  });
+};
 
 const savePaletteToProject = project => {
   console.log(newColorArray);
