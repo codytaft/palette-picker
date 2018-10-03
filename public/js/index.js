@@ -10,6 +10,7 @@ const handleSavePaletteClick = () => {
   $('.save-palette-btn').click(e => {
     e.preventDefault();
     savePaletteToProject($('.project').val());
+    console.log('.project');
   });
 };
 
@@ -20,10 +21,17 @@ const handleDropdownSelector = () => {
 };
 
 const savePaletteToProject = project => {
-  console.log(newColorArray);
-  fetch('/api/v1/projects', {
+  fetch('/api/v1/palettes', {
     method: 'POST',
-    body: JSON.stringify({ colors: newColorArray }),
+    body: JSON.stringify({
+      name: 'hot',
+      color1: '#def402',
+      color2: '#647eda',
+      color3: '#d71568',
+      color4: '#39658a',
+      color5: '#eac5d',
+      project_id: 2
+    }),
     headers: {
       'Content-Type': 'application/json'
     }
@@ -44,7 +52,9 @@ const displayColors = colors => {
   $('.color-card-display').empty();
   colors.map(color => {
     return $('.color-card-display').prepend(
-      `<div class="color-card ${color}" style="background-color:${color}">`
+      `<div class="color-card ${color}" style="background-color:${color}">
+      <p>${color}</p>
+      <img src="../images/unlock.svg" alt="lock.png" class="lock-icon">`
     );
   });
 };
