@@ -5,36 +5,51 @@ $(document).ready(() => {
 });
 
 var newColorArray = [];
+var selectedProject = '';
 
 const handleSavePaletteClick = () => {
   $('.save-palette-btn').click(e => {
     e.preventDefault();
-    savePaletteToProject($('.project').val());
+    const paletteName = $('.palette-input').val();
+    savePaletteToDatabase(paletteName, newColorArray, selectedProject);
+    displayPalette(paletteName, newColorArray, selectedProject);
+    $('.palette-input').val('');
   });
 };
 
 const handleDropdownSelector = () => {
   return $('.select-dropdown').change(() => {
-    console.log($('select option:selected').text());
+    selectedProject = $('select option:selected').text();
   });
 };
 
-const savePaletteToProject = project => {
+const savePalette = (paletteName, colors, projectName) => {
+  console.log(projectName);
+  console.log(paletteName);
+  console.log(colors);
+  savePaletteToDatabase(paletteName, colors, projectName);
+};
+
+const savePaletteToDatabase = (paletteName, colors, projectName) => {
   fetch('/api/v1/palettes', {
     method: 'POST',
     body: JSON.stringify({
-      name: 'hot',
-      color1: '#def402',
-      color2: '#647eda',
-      color3: '#d71568',
-      color4: '#39658a',
-      color5: '#eac5d',
-      project_id: 2
+      palette_name: paletteName,
+      color1: colors[0],
+      color2: colors[1],
+      color3: colors[2],
+      color4: colors[3],
+      color5: colors[4],
+      project_id: projectName
     }),
     headers: {
       'Content-Type': 'application/json'
     }
   });
+};
+
+const displayPalette = (paletteName, colors, projectName) => {
+  console.log(paletteName, colors, projectName);
 };
 
 const getRandomColors = () => {
