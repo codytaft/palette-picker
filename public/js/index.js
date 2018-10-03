@@ -10,7 +10,6 @@ const handleSavePaletteClick = () => {
   $('.save-palette-btn').click(e => {
     e.preventDefault();
     savePaletteToProject($('.project').val());
-    console.log('.project');
   });
 };
 
@@ -40,11 +39,13 @@ const savePaletteToProject = project => {
 
 const getRandomColors = () => {
   for (let i = 0; i < 5; i++) {
-    const newColor = '#' + ((Math.random() * 0xffffff) << 0).toString(16);
+    const newColor =
+      '#' + ((Math.random() * 0xffffff) << 0).toString(16).toUpperCase();
     if (newColorArray.length < 5) {
       newColorArray.push(newColor);
     }
   }
+  console.log(newColorArray);
   displayColors(newColorArray);
 };
 
