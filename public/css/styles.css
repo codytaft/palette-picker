@@ -24,3 +24,8 @@ body {
 input {
   color: black;
 }
+
+.project-select {
+  position: relative;
+  font-family: Arial;
+}

@@ -1,7 +1,7 @@
 $(document).ready(() => {
   getRandomColors();
   handleSavePaletteClick();
-  handleDropdownButton();
+  handleDropdownSelector();
 });
 
 var newColorArray = [];
@@ -13,10 +13,9 @@ const handleSavePaletteClick = () => {
   });
 };
 
-const handleDropdownButton = () => {
-  $('.dropdown-btn').click(e => {
-    e.preventDefault();
-    $('.dropdown-projects').toggleClass('show');
+const handleDropdownSelector = () => {
+  return $('.select-dropdown').change(() => {
+    console.log($('select option:selected').text());
   });
 };
 
