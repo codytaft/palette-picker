@@ -56,8 +56,6 @@ app.post('/api/v1/projects', (request, response) => {
 
 app.post('/api/v1/palettes', (request, response) => {
   let palette = request.body;
-  console.log(palette);
-
   for (let requiredParameter of [
     'palette_name',
     'project_id',
@@ -77,7 +75,6 @@ app.post('/api/v1/palettes', (request, response) => {
     .where({ project_name: palette.project_id })
     .select()
     .then(id => {
-      console.log(id[0].id);
       palette.project_id = id[0].id;
     })
     .then(() => {
