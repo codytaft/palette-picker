@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Palette Picker</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/styles.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="./js/index.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+
+<body>
+  <h1>Palette Picker</h1>
+  <section class="color-card-display">
+  </section>
+  <p class="instruction-text">Press Spacebar For New Palette</p>
+  <section class="project-save-form">
+    <select class="select-dropdown">
+      <option value='0'>Select project:</option>
+      <option value='1'>Project 1</option>
+      <option value='2'>Project 2</option>
+      <option value='3'>Project 3</option>
+    </select>
+    <input name="project" type="text" class='input'>
+    <button class="save-palette-btn">save</button>
+  </section>
+  <section class="project-cards">
+    <ul class="palette-list"></ul>
+  </section>
+  <section class="project-section">
+    <article class="palette-list">
+      <button class='project-btn'>Project 1</button>
+      <li>warm</li>
+      <span class="circle" style='background-color: antiquewhite'></span>
+      <span class="circle" style='background-color: darkblue'></span>
+      <span class="circle" style='background-color: aqua'></span>
+      <span class="circle" style='background-color: firebrick'></span>
+      <span class="circle" style='background-color: mediumpurple'></span>
+      <li>cool</li>
+      <span class="circle" style='background-color: lightcoral'></span>
+      <span class="circle" style='background-color: khaki'></span>
+      <span class="circle" style='background-color: orange'></span>
+      <span class="circle" style='background-color: forestgreen'></span>
+      <span class="circle" style='background-color: darkcyan'></span>
+    </article>
+  </section>
+</body>
+
+</html>
