@@ -1,18 +1,3 @@
-// let paletteData = {
-//   palette_name: 'hot',
-//   color1: '#def402',
-//   color2: '#647eda',
-//   color3: '#d71568',
-//   color4: '#39658a',
-//   color5: '#eac5d',
-//   project_id: 1
-// };
-
-// let projectData = {
-//   id: 1,
-//   project_name: 'Dining Room'
-// };
-
 exports.seed = function(knex, Promise) {
   return knex('palettes')
     .del()

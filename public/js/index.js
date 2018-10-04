@@ -22,7 +22,7 @@ const handleSavePaletteClick = () => {
   });
   $('.save-palette-btn').click(e => {
     e.preventDefault();
-    const paletteName = $('.palette-input').val();
+    const paletteName = $('.palette-name-input').val();
     savePaletteToDatabase(paletteName, newColorArray, selectedProject);
     displayPalette(paletteName, newColorArray, selectedProject);
     $('.palette-name-input').val('');
@@ -30,6 +30,7 @@ const handleSavePaletteClick = () => {
 };
 
 const savePaletteToDatabase = (paletteName, colors, projectName) => {
+  console.log(paletteName, colors, projectName);
   fetch('/api/v1/palettes', {
     method: 'POST',
     body: JSON.stringify({
