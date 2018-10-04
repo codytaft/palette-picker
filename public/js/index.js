@@ -3,6 +3,7 @@ $(document).ready(() => {
   handleSavePaletteClick();
   handleDropdownSelector();
   handleSaveProjectClick();
+  getSavedProjects();
   handleLockClick();
 });
 
@@ -79,6 +80,14 @@ const saveProjectToDatabase = projectName => {
       'Content-Type': 'application/json'
     }
   });
+};
+
+const getSavedProjects = () => {
+  fetch('/api/v1/projects')
+    .then(response => response.json())
+    .then(project => {
+      project.forEach(project => populateDropDown(project.project_name));
+    });
 };
 
 const handleDropdownSelector = () => {
