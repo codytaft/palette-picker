@@ -2,6 +2,7 @@ $(document).ready(() => {
   getRandomColors();
   handleSavePaletteClick();
   handleDropdownSelector();
+  handleSaveProjectClick();
 });
 
 var newColorArray = [];
@@ -13,21 +14,8 @@ const handleSavePaletteClick = () => {
     const paletteName = $('.palette-input').val();
     savePaletteToDatabase(paletteName, newColorArray, selectedProject);
     displayPalette(paletteName, newColorArray, selectedProject);
-    $('.palette-input').val('');
+    $('.palette-name-input').val('');
   });
-};
-
-const handleDropdownSelector = () => {
-  return $('.select-dropdown').change(() => {
-    selectedProject = $('select option:selected').text();
-  });
-};
-
-const savePalette = (paletteName, colors, projectName) => {
-  console.log(projectName);
-  console.log(paletteName);
-  console.log(colors);
-  savePaletteToDatabase(paletteName, colors, projectName);
 };
 
 const savePaletteToDatabase = (paletteName, colors, projectName) => {
@@ -51,6 +39,45 @@ const savePaletteToDatabase = (paletteName, colors, projectName) => {
 const displayPalette = (paletteName, colors, projectName) => {
   console.log(paletteName, colors, projectName);
 };
+
+const handleSaveProjectClick = () => {
+  $('.save-project-btn').click(e => {
+    e.preventDefault();
+    const projectName = $('.project-name-input').val();
+    saveProjectToDatabase(projectName);
+    displayProject(projectName);
+    $('.project-name-input').val('');
+  });
+};
+
+const displayProject = projectName => {
+  console.log(projectName);
+};
+
+const saveProjectToDatabase = projectName => {
+  fetch('/api/v1/projects', {
+    method: 'POST',
+    body: JSON.stringify({
+      project_name: projectName
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+const handleDropdownSelector = () => {
+  return $('.select-dropdown').change(() => {
+    selectedProject = $('select option:selected').text();
+  });
+};
+
+// const savePalette = (paletteName, colors, projectName) => {
+//   console.log(projectName);
+//   console.log(paletteName);
+//   console.log(colors);
+//   savePaletteToDatabase(paletteName, colors, projectName);
+// };
 
 const getRandomColors = () => {
   for (let i = 0; i < 5; i++) {
