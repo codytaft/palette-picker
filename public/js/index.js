@@ -2,38 +2,85 @@ $(document).ready(() => {
   getRandomColors();
   handleSavePaletteClick();
   handleDropdownSelector();
+  handleSaveProjectClick();
+  handleLockClick();
 });
 
 var newColorArray = [];
+var selectedProject = '';
+
+const handleLockClick = () => {
+  $('.lock-icon').click(() => {
+    $('.lock-icon').toggleClass('locked');
+  });
+};
 
 const handleSavePaletteClick = () => {
   $('.save-palette-btn').click(e => {
     e.preventDefault();
-    savePaletteToProject($('.project').val());
+    const paletteName = $('.palette-input').val();
+    savePaletteToDatabase(paletteName, newColorArray, selectedProject);
+    displayPalette(paletteName, newColorArray, selectedProject);
+    $('.palette-name-input').val('');
+  });
+};
+
+const savePaletteToDatabase = (paletteName, colors, projectName) => {
+  fetch('/api/v1/palettes', {
+    method: 'POST',
+    body: JSON.stringify({
+      palette_name: paletteName,
+      color1: colors[0],
+      color2: colors[1],
+      color3: colors[2],
+      color4: colors[3],
+      color5: colors[4],
+      project_id: projectName
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+const displayPalette = (paletteName, colors, projectName) => {
+  console.log(paletteName, colors, projectName);
+};
+
+const handleSaveProjectClick = () => {
+  $('.save-project-btn').click(e => {
+    e.preventDefault();
+    const projectName = $('.project-name-input').val();
+    saveProjectToDatabase(projectName);
+    displayProject(projectName);
+    populateDropDown(projectName);
+    $('.project-name-input').val('');
+  });
+};
+
+const populateDropDown = projectName => {
+  $('.select-dropdown').append(`<option >${projectName}</option>`);
+};
+
+const displayProject = projectName => {
+  console.log(projectName);
+};
+
+const saveProjectToDatabase = projectName => {
+  fetch('/api/v1/projects', {
+    method: 'POST',
+    body: JSON.stringify({
+      project_name: projectName
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
 };
 
 const handleDropdownSelector = () => {
   return $('.select-dropdown').change(() => {
-    console.log($('select option:selected').text());
-  });
-};
-
-const savePaletteToProject = project => {
-  fetch('/api/v1/palettes', {
-    method: 'POST',
-    body: JSON.stringify({
-      name: 'hot',
-      color1: '#def402',
-      color2: '#647eda',
-      color3: '#d71568',
-      color4: '#39658a',
-      color5: '#eac5d',
-      project_id: 2
-    }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    selectedProject = $('select option:selected').text();
   });
 };
 
@@ -45,7 +92,6 @@ const getRandomColors = () => {
       newColorArray.push(newColor);
     }
   }
-  console.log(newColorArray);
   displayColors(newColorArray);
 };
 
@@ -55,7 +101,8 @@ const displayColors = colors => {
     return $('.color-card-display').prepend(
       `<div class="color-card ${color}" style="background-color:${color}">
       <p>${color}</p>
-      <img src="../images/unlock.svg" alt="lock.png" class="lock-icon">`
+      <div class="lock-icon">     
+      `
     );
   });
 };

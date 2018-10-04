@@ -11,17 +11,21 @@
 
 <body>
   <h1>Palette Picker</h1>
+  <p class="instruction-text">Press Spacebar For New Palette</p>
   <section class="color-card-display">
   </section>
-  <p class="instruction-text">Press Spacebar For New Palette</p>
-  <section class="project-save-form">
+  <section class="create-project-section">
+    <p>Create New Project</p>
+    <input name="project-name " type="text" placeholder="Project Name" class="project-name-input">
+    <button class="save-project-btn">Save Project</button>
+  </section>
+
+  <section class="palette-save-form">
+    <p>Save Palette to Project</p>
     <select class="select-dropdown">
       <option value='0'>Select project:</option>
-      <option value='1'>Project 1</option>
-      <option value='2'>Project 2</option>
-      <option value='3'>Project 3</option>
     </select>
-    <input name="project" type="text" class='input'>
+    <input name="palette" placeholder="Palette Name" type="text" class="palette-name-input" />
     <button class="save-palette-btn">save</button>
   </section>
   <section class="project-cards">

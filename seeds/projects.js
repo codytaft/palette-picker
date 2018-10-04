@@ -28,6 +28,10 @@ exports.seed = function(knex, Promise) {
             {
               id: 2,
               project_name: 'Living Room'
+            },
+            {
+              id: 3,
+              project_name: 'Project 1'
             }
           ])
           .then(() => {
