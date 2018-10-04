@@ -16,6 +16,9 @@ const handleLockClick = () => {
 };
 
 const handleSavePaletteClick = () => {
+  $('.save-palette-btn').bind('keypress', e => {
+    e.stopPropogation;
+  });
   $('.save-palette-btn').click(e => {
     e.preventDefault();
     const paletteName = $('.palette-input').val();
