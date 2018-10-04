@@ -3,10 +3,17 @@ $(document).ready(() => {
   handleSavePaletteClick();
   handleDropdownSelector();
   handleSaveProjectClick();
+  handleLockClick();
 });
 
 var newColorArray = [];
 var selectedProject = '';
+
+const handleLockClick = () => {
+  $('.lock-icon').click(() => {
+    $('.lock-icon').toggleClass('.locked');
+  });
+};
 
 const handleSavePaletteClick = () => {
   $('.save-palette-btn').click(e => {
@@ -46,8 +53,13 @@ const handleSaveProjectClick = () => {
     const projectName = $('.project-name-input').val();
     saveProjectToDatabase(projectName);
     displayProject(projectName);
+    populateDropDown(projectName);
     $('.project-name-input').val('');
   });
+};
+
+const populateDropDown = projectName => {
+  $('.select-dropdown').append(`<option >${projectName}</option>`);
 };
 
 const displayProject = projectName => {
