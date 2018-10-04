@@ -67,12 +67,14 @@ li {
 }
 
 .lock-icon {
+  content: url('../images/unlock.svg');
   cursor: pointer;
   width: 5rem;
   margin: 0 auto;
+  /* z-index: 1; */
 }
 
 .lock-icon:hover {
-  background: url('../images/unlock-white.svg') no-repeat;
+  content: url('../images/unlock-white.svg');
   width: 5rem;
 }

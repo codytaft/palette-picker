@@ -11,7 +11,7 @@ var selectedProject = '';
 
 const handleLockClick = () => {
   $('.lock-icon').click(() => {
-    $('.lock-icon').toggleClass('.locked');
+    $('.lock-icon').toggleClass('locked');
   });
 };
 
@@ -84,13 +84,6 @@ const handleDropdownSelector = () => {
   });
 };
 
-// const savePalette = (paletteName, colors, projectName) => {
-//   console.log(projectName);
-//   console.log(paletteName);
-//   console.log(colors);
-//   savePaletteToDatabase(paletteName, colors, projectName);
-// };
-
 const getRandomColors = () => {
   for (let i = 0; i < 5; i++) {
     const newColor =
@@ -99,7 +92,6 @@ const getRandomColors = () => {
       newColorArray.push(newColor);
     }
   }
-  console.log(newColorArray);
   displayColors(newColorArray);
 };
 
@@ -109,7 +101,8 @@ const displayColors = colors => {
     return $('.color-card-display').prepend(
       `<div class="color-card ${color}" style="background-color:${color}">
       <p>${color}</p>
-      <img src="../images/unlock.svg" alt="lock.png" class="lock-icon">`
+      <div class="lock-icon">     
+      `
     );
   });
 };
