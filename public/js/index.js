@@ -4,17 +4,11 @@ $(document).ready(() => {
   handleDropdownSelector();
   handleSaveProjectClick();
   getSavedProjects();
-  handleLockClick();
+  // handleLockClick();
 });
 
 var newColorArray = [];
 var selectedProject = '';
-
-const handleLockClick = () => {
-  $('.lock-icon').click(() => {
-    $('.lock-icon').toggleClass('locked');
-  });
-};
 
 const handleSavePaletteClick = () => {
   $('.save-palette-btn').bind('keypress', e => {
@@ -122,15 +116,25 @@ const getRandomColors = () => {
 };
 
 const displayColors = colors => {
+  console.log($('.color-card').hasClass('.locked'));
+  // if ($('.color-card').hasClass('.locked')) {
+  //   console.log('hi');
+  // }
   $('.color-card-display').empty();
   colors.map(color => {
     return $('.color-card-display').prepend(
       `<div class="color-card ${color}" style="background-color:${color}">
       <p>${color}</p>
-      <div class="lock-icon">     
+      <div class="lock-icon ${color}"> 
+      </div>
       `
     );
   });
+};
+
+const handleLockClick = () => {
+  console.log('hi');
+  $('.lock-icon').toggleClass('locked');
 };
 
 $(window).keypress(e => {
@@ -140,3 +144,5 @@ $(window).keypress(e => {
     getRandomColors();
   }
 });
+
+$('.color-card-display').on('click', '.lock-icon', handleLockClick);
