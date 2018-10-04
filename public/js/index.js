@@ -56,10 +56,23 @@ const handleSaveProjectClick = () => {
   $('.save-project-btn').click(e => {
     e.preventDefault();
     const projectName = $('.project-name-input').val();
-    saveProjectToDatabase(projectName);
-    displayProject(projectName);
-    populateDropDown(projectName);
-    $('.project-name-input').val('');
+    fetch('./api/v1/projects')
+      .then(response => response.json())
+      .then(projects => {
+        if (
+          projectName.length &&
+          !projects.find(
+            project =>
+              // project => console.log(project.project_name)
+              project.project_name === $('.project-name-input').val()
+          )
+        ) {
+          saveProjectToDatabase(projectName);
+          displayProject(projectName);
+          populateDropDown(projectName);
+          $('.project-name-input').val('');
+        }
+      });
   });
 };
 
