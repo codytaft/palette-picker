@@ -12,9 +12,6 @@ var newColorArray = [];
 var selectedProject = '';
 
 const handleSavePaletteClick = () => {
-  // $('.save-palette-btn').bind('keypress', e => {
-  //   e.stopPropogation;
-  // });
   $('.save-palette-btn').click(e => {
     e.preventDefault();
     const paletteName = $('.palette-name-input').val();
@@ -25,7 +22,6 @@ const handleSavePaletteClick = () => {
 };
 
 const savePaletteToDatabase = (paletteName, colors, projectName) => {
-  console.log(paletteName, colors, projectName);
   fetch('/api/v1/palettes', {
     method: 'POST',
     body: JSON.stringify({
@@ -122,11 +118,11 @@ const displayColors = colors => {
   //     .remove();
   // }
 
-  $('.color-card-display').empty();
-
   // $('.color-card')
   //   .not('.isLocked')
   //   .remove();
+
+  $('.color-card-display').empty();
 
   colors.map(color => {
     return $('.color-card-display').append(
