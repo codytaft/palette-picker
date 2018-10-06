@@ -78,3 +78,8 @@ li {
   content: url('../images/unlock-white.svg');
   width: 5rem;
 }
+
+.locked {
+  content: url('../images/unlock-white.svg');
+  width: 5rem;
+}

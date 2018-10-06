@@ -76,6 +76,12 @@ app.post('/api/v1/projects', (request, response) => {
     });
 });
 
+// app.delete('/api/v1/palettes', (request, response) => {
+//   database('projects')
+//     .where(request.id)
+
+// })
+
 app.post('/api/v1/palettes', (request, response) => {
   let palette = request.body;
   for (let requiredParameter of [
@@ -107,9 +113,9 @@ app.post('/api/v1/palettes', (request, response) => {
         })
         .catch(error => {
           response.status(500).json({ error });
-        })
-        .catch(error => response.status(500).json({ error }));
-    });
+        });
+    })
+    .catch(error => response.status(500).json({ error }));
 });
 
 app.listen(app.get('port'), () => {
