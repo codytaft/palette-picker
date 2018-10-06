@@ -106,12 +106,11 @@ const handleDropdownSelector = () => {
 };
 
 const getRandomColors = () => {
-  for (let i = 0; i < 5; i++) {
+  while (newColorArray.length < 5) {
     const newColor =
       '#' + ((Math.random() * 0xffffff) << 0).toString(16).toUpperCase();
-    if (newColorArray.length < 5) {
-      newColorArray.push(newColor);
-    }
+    newColorArray.push(newColor);
+    console.log(newColorArray);
   }
   return newColorArray;
 };
@@ -125,13 +124,17 @@ const displayColors = colors => {
 
   $('.color-card-display').empty();
 
+  // $('.color-card')
+  //   .not('.isLocked')
+  //   .remove();
+
   colors.map(color => {
-    return $('.color-card-display').prepend(
+    return $('.color-card-display').append(
       `<div class="color-card ${color}" style="background-color:${color}">
-      <p>${color}</p>
-      <div class="lock-icon ${color}"> 
-      </div>
-      `
+        <p>${color}</p>
+        <div class="lock-icon ${color}"> 
+        </div>
+        `
     );
   });
 };
@@ -147,6 +150,11 @@ $(window).keypress(e => {
   if (e.which === 32 && !($(document.activeElement)[0].localName === 'input')) {
     e.preventDefault();
     newColorArray = [];
+    const lockedElements = $('.isLocked');
+    lockedElements.each(function() {
+      const lockedHex = $(this)[0].classList[1];
+      newColorArray.push(lockedHex);
+    });
     const randomColors = getRandomColors();
     displayColors(randomColors);
   }
