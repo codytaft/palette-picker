@@ -14,17 +14,17 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-// app.use(function(req, res, next) {
-//   res.setHeader('Content-Type', 'application/json');
+app.use(function(req, res, next) {
+  res.setHeader('Content-Type', 'application/json');
 
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', '*');
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept'
-//   );
-//   next();
-// });
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 
 app.locals.title = 'Palette Picker';
 
@@ -45,19 +45,6 @@ app.get('/api/v1/projects', (request, response) => {
     });
 });
 
-// app.get('/api/v1/projects/:id/', (request, response) => {
-//   database('projects')
-//     .where('id', request.params.id)
-//     .select()
-//     .then(project => {
-//       // console.log(project[0].project_name);
-//       response.status(200).json(project[0].project_name);
-//     })
-//     .catch(error => {
-//       response.status(500).json({ error });
-//     });
-// });
-
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes')
     .select()
@@ -69,11 +56,19 @@ app.get('/api/v1/palettes', (request, response) => {
     });
 });
 
-app.delete('/api/v1/palettes/', (request, response) => {
-  const paletteName = request.body.palette_name;
-  console.log(paletteName);
+app.get('/api/v1/palettes/:project_id', (request, response) => {
+  let projectId = request.params.project_id;
   database('palettes')
-    .where('palette_name', paletteName)
+    .where('project_id', projectId)
+    .then(palettes => {
+      response.status(200).json(palettes);
+    });
+});
+
+app.delete('/api/v1/palettes/', (request, response) => {
+  const paletteId = request.body.id;
+  database('palettes')
+    .where('id', paletteId)
     .del()
     .catch(error => {
       response.status(500).json({ error });
@@ -99,12 +94,6 @@ app.post('/api/v1/projects', (request, response) => {
       response.status(500).json({ error });
     });
 });
-
-// app.delete('/api/v1/palettes', (request, response) => {
-//   database('projects')
-//     .where(request.id)
-
-// })
 
 app.post('/api/v1/palettes', (request, response) => {
   let palette = request.body;
@@ -145,41 +134,3 @@ app.post('/api/v1/palettes', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} running on ${app.get('port')}`);
 });
-
-// app.locals.palettes = [
-//   {
-//     id: 1,
-//     name: 'warm',
-//     color1: '#def402',
-//     color2: '#647eda',
-//     color3: '#d71568',
-//     color4: '#39658a',
-//     color5: '#eac5d',
-//     project_id: 1
-//   },
-//   {
-//     id: 2,
-//     name: 'cool',
-//     color1: '#def402',
-//     color2: '#647eda',
-//     color3: '#d71568',
-//     color4: '#39658a',
-//     color5: '#eac5d',
-//     project_id: 1
-//   },
-//   {
-//     id: 3,
-//     name: 'cold',
-//     color1: '#def402',
-//     color2: '#647eda',
-//     color3: '#d71568',
-//     color4: '#39658a',
-//     color5: '#eac5d',
-//     project_id: 2
-//   }
-// ];
-
-// app.locals.projects = [
-//   { id: 1, name: 'living room' },
-//   { id: 2, name: 'dining room' }
-// ];

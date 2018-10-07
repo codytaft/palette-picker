@@ -5,7 +5,7 @@ $(document).ready(() => {
   handleDropdownSelector();
   handleSaveProjectClick();
   getSavedProjects();
-  getSavedPalettes();
+  // getSavedPalettes();
 });
 
 var newColorArray = [];
@@ -17,7 +17,6 @@ const handleSavePaletteClick = () => {
     e.preventDefault();
     const paletteName = $('.palette-name-input').val();
     savePaletteToDatabase(paletteName, newColorArray, selectedProject);
-    displayPalette(paletteName, newColorArray, selectedProject);
     $('.palette-name-input').val('');
   });
 };
@@ -37,6 +36,8 @@ const savePaletteToDatabase = (paletteName, colors, projectName) => {
     headers: {
       'Content-Type': 'application/json'
     }
+  }).then(palette => {
+    displayPalette(paletteName, colors, projectName, palette.id);
   });
 };
 
@@ -56,8 +57,6 @@ const handleSaveProjectClick = () => {
           )
         ) {
           saveProjectToDatabase(projectName);
-          displayProject(projectName);
-          populateDropDown(projectName);
           $('.project-name-input').val('');
         }
       });
@@ -68,21 +67,22 @@ const populateDropDown = projectName => {
   $('.select-dropdown').append(`<option >${projectName}</option>`);
 };
 
-const displayProject = projectName => {
+const displayProject = (projectName, projectId) => {
+  console.log(projectId);
   $('.project-section').append(`
-  <article class='project-card'>
+  <article id='${projectId}' class='project-card'>
   <button class='project-btn'>${projectName}</button>
   </article>`);
 };
 
-const displayPalette = (paletteName, colors, projectName) => {
+const displayPalette = (paletteName, colors, projectName, paletteId) => {
   $('.project-section')
     .find(`:contains(${projectName})`)[0]
     .insertAdjacentHTML(
       'beforeend',
       `
       <section class='palette-card'>
-      <h2 class='palette-name'>${paletteName}</h2>
+      <h2 id='paletteId'class='palette-name'>${paletteName}</h2>
       <span class="circle" style='background-color: ${colors[0]}'></span>
       <span class="circle" style='background-color: ${colors[1]}'></span>
       <span class="circle" style='background-color: ${colors[2]}'></span>
@@ -95,25 +95,24 @@ const displayPalette = (paletteName, colors, projectName) => {
 };
 
 const displaySavedPalettes = palettes => {
-  // console.log(savedProjects);
-  // palettes.forEach(palette => {
-  //   console.log(palette);
-  //   palette;
-  //   $('.project-section')
-  //     .find(`:contains(${palette.project_id})`)[0]
-  //     .insertAdjacentHTML(
-  //       'beforeend',
-  //       `
-  //       <h2>${palette.palette_name}</h2>
-  //       <span class="circle" style='background-color: ${palette.color1}'></span>
-  //       <span class="circle" style='background-color: ${palette.color2}'></span>
-  //       <span class="circle" style='background-color: ${palette.color3}'></span>
-  //       <span class="circle" style='background-color: ${palette.color4}'></span>
-  //       <span class="circle" style='background-color: ${palette.color5}'></span>
-  //       <button class="circle delete-btn"/>
-  //       `
-  //     );
-  // });
+  palettes.forEach(palette => {
+    $('.project-section')
+      .find(`#${palette.project_id}`)[0]
+      .insertAdjacentHTML(
+        'beforeend',
+        `
+        <section id='${palette.id}'class='palette-card'>
+        <h2>${palette.palette_name}</h2>
+        <span class="circle" style='background-color: ${palette.color1}'></span>
+        <span class="circle" style='background-color: ${palette.color2}'></span>
+        <span class="circle" style='background-color: ${palette.color3}'></span>
+        <span class="circle" style='background-color: ${palette.color4}'></span>
+        <span class="circle" style='background-color: ${palette.color5}'></span>
+        <span class="delete-btn"></span>
+        </section>
+        `
+      );
+  });
 };
 
 const saveProjectToDatabase = projectName => {
@@ -125,38 +124,32 @@ const saveProjectToDatabase = projectName => {
     headers: {
       'Content-Type': 'application/json'
     }
+  }).then(projectId => {
+    displayProject(projectName, projectId);
+    populateDropDown(projectName, projectId);
   });
 };
 
-const getSavedProjects = () => {
-  fetch('/api/v1/projects')
+const getSavedProjects = async () => {
+  await fetch('/api/v1/projects')
     .then(response => response.json())
     .then(project => {
-      project.forEach(project => populateDropDown(project.project_name));
-      project.forEach(project => displayProject(project.project_name));
-      project.forEach(project => savedProjects.push(project.project_name));
+      project.forEach(project => {
+        populateDropDown(project.project_name);
+        displayProject(project.project_name, project.id);
+        getSavedPalettes(project);
+      });
     });
 };
 
-const getSavedPalettes = () => {
-  fetch('/api/v1/palettes')
+const getSavedPalettes = async project => {
+  console.log(project.id);
+  await fetch(`/api/v1/palettes/${project.id}`)
     .then(response => response.json())
     .then(palettes => {
       displaySavedPalettes(palettes);
     });
 };
-
-// const cleanProjectId = palettes => {
-//   let newPalettes = [...palettes];
-//   palettes.forEach(async palette => {
-//     await fetch(`/api/v1/projects/${palette.project_id}`)
-//       .then(response => response.json())
-//       .then(projectName => {
-//         palette.project_id = projectName;
-//       });
-//   });
-//   displaySavedPalettes(palettes);
-// };
 
 const handleDropdownSelector = () => {
   return $('.select-dropdown').change(() => {
@@ -205,14 +198,14 @@ const handleLockClick = e => {
 };
 
 const handleDeleteBtn = e => {
-  const paletteName = $(e.target)
-    .siblings('.palette-name')
-    .text();
+  const paletteId = $(e.target)
+    .parent()
+    .attr('id');
   const paletteCard = $(e.target).parent('.palette-card');
   fetch('/api/v1/palettes', {
     method: 'DELETE',
     body: JSON.stringify({
-      palette_name: paletteName
+      id: paletteId
     }),
     headers: {
       'Content-Type': 'application/json'
