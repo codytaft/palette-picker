@@ -39,10 +39,6 @@ const savePaletteToDatabase = (paletteName, colors, projectName) => {
   });
 };
 
-const displayPalette = (paletteName, colors, projectName) => {
-  console.log(paletteName, colors, projectName);
-};
-
 const handleSaveProjectClick = () => {
   $('.save-project-btn').click(e => {
     e.preventDefault();
@@ -72,7 +68,30 @@ const populateDropDown = projectName => {
 };
 
 const displayProject = projectName => {
-  console.log(projectName);
+  $('.project-section').append(`
+  <article class='project-card'>
+  <button class='project-btn'>${projectName}</button>
+  </article>`);
+};
+
+const displayPalette = (paletteName, colors, projectName) => {
+  console.log($('.project-section').find(`:contains(${projectName})`)[0]);
+  console.log(
+    $('.project-section')
+      .find(`:contains(${projectName})`)[0]
+      .insertAdjacentHTML(
+        'beforeend',
+        `
+      <h2>${paletteName}</h2>
+      <span class="circle" style='background-color: ${colors[0]}'></span>
+      <span class="circle" style='background-color: ${colors[1]}'></span>
+      <span class="circle" style='background-color: ${colors[2]}'></span>
+      <span class="circle" style='background-color: ${colors[3]}'></span>
+      <span class="circle" style='background-color: ${colors[4]}'></span>
+      `
+      )
+  );
+  $('.project-section').find(`.${projectName}`);
 };
 
 const saveProjectToDatabase = projectName => {
