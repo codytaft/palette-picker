@@ -45,12 +45,36 @@ app.get('/api/v1/projects', (request, response) => {
     });
 });
 
+// app.get('/api/v1/projects/:id/', (request, response) => {
+//   database('projects')
+//     .where('id', request.params.id)
+//     .select()
+//     .then(project => {
+//       // console.log(project[0].project_name);
+//       response.status(200).json(project[0].project_name);
+//     })
+//     .catch(error => {
+//       response.status(500).json({ error });
+//     });
+// });
+
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes')
     .select()
-    .then(palette => {
-      response.status(200).json(palette);
+    .then(palettes => {
+      response.status(200).json(palettes);
     })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
+app.delete('/api/v1/palettes/', (request, response) => {
+  const paletteName = request.body.palette_name;
+  console.log(paletteName);
+  database('palettes')
+    .where('palette_name', paletteName)
+    .del()
     .catch(error => {
       response.status(500).json({ error });
     });
