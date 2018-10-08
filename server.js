@@ -65,6 +65,15 @@ app.get('/api/v1/palettes/:project_id', (request, response) => {
     });
 });
 
+app.get('/api/v1/palettes/:id/palettes', (request, response) => {
+  let paletteId = request.params.id;
+  database('palettes')
+    .where('id', paletteId)
+    .then(palette => {
+      response.status(200).json(palette[0]);
+    });
+});
+
 app.delete('/api/v1/palettes/', (request, response) => {
   const paletteId = request.body.id;
   database('palettes')

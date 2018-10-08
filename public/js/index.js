@@ -5,7 +5,6 @@ $(document).ready(() => {
   handleDropdownSelector();
   handleSaveProjectClick();
   getSavedProjects();
-  // getSavedPalettes();
 });
 
 var newColorArray = [];
@@ -37,7 +36,7 @@ const savePaletteToDatabase = (paletteName, colors, projectName) => {
       'Content-Type': 'application/json'
     }
   }).then(palette => {
-    displayPalette(paletteName, colors, projectName, palette.id);
+    displayPaletteIcons(paletteName, colors, projectName, palette.id);
   });
 };
 
@@ -63,19 +62,20 @@ const handleSaveProjectClick = () => {
   });
 };
 
-const populateDropDown = projectName => {
-  $('.select-dropdown').append(`<option >${projectName}</option>`);
+const populateDropDown = (projectName, projectId) => {
+  $('.select-dropdown').append(
+    `<option class='${projectId}'>${projectName}</option>`
+  );
 };
 
 const displayProject = (projectName, projectId) => {
-  console.log(projectId);
   $('.project-section').append(`
   <article id='${projectId}' class='project-card'>
   <button class='project-btn'>${projectName}</button>
   </article>`);
 };
 
-const displayPalette = (paletteName, colors, projectName, paletteId) => {
+const displayPaletteIcons = (paletteName, colors, projectName, paletteId) => {
   $('.project-section')
     .find(`:contains(${projectName})`)[0]
     .insertAdjacentHTML(
@@ -94,7 +94,7 @@ const displayPalette = (paletteName, colors, projectName, paletteId) => {
     );
 };
 
-const displaySavedPalettes = palettes => {
+const displaySavedPaletteIcons = palettes => {
   palettes.forEach(palette => {
     $('.project-section')
       .find(`#${palette.project_id}`)[0]
@@ -135,7 +135,7 @@ const getSavedProjects = async () => {
     .then(response => response.json())
     .then(project => {
       project.forEach(project => {
-        populateDropDown(project.project_name);
+        populateDropDown(project.project_name, project.id);
         displayProject(project.project_name, project.id);
         getSavedPalettes(project);
       });
@@ -143,11 +143,29 @@ const getSavedProjects = async () => {
 };
 
 const getSavedPalettes = async project => {
-  console.log(project.id);
   await fetch(`/api/v1/palettes/${project.id}`)
     .then(response => response.json())
     .then(palettes => {
-      displaySavedPalettes(palettes);
+      displaySavedPaletteIcons(palettes);
+    });
+};
+
+const handlePaletteClick = async e => {
+  const paletteId = $(e.target)
+    .parent()
+    .attr('id');
+  await fetch(`/api/v1/palettes/${paletteId}/palettes`)
+    .then(response => response.json())
+    .then(palette => {
+      const paletteArray = [];
+      paletteArray.push(
+        palette.color1,
+        palette.color2,
+        palette.color3,
+        palette.color4,
+        palette.color5
+      );
+      displayColors(paletteArray);
     });
 };
 
@@ -214,6 +232,8 @@ const handleDeleteBtn = e => {
   $(paletteCard[0]).remove();
 };
 
+const displayPalette = () => {};
+
 $(window).keypress(e => {
   if (e.which === 32 && !($(document.activeElement)[0].localName === 'input')) {
     e.preventDefault();
@@ -230,3 +250,4 @@ $(window).keypress(e => {
 
 $('.color-card-display').on('click', '.lock-icon', handleLockClick);
 $('.project-section').on('click', '.delete-btn', handleDeleteBtn);
+$('.project-section').on('click', '.circle', handlePaletteClick);
