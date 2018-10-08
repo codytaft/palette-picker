@@ -1,10 +1,17 @@
 body {
-  background-color: black;
+  background-color: #080808;
   color: whitesmoke;
   font-variant: small-caps;
   margin: auto;
   width: 100%;
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+input,
+select {
+  color: #080808;
+  font-variant: small-caps;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -22,13 +29,70 @@ body {
   border: 0.1rem solid white;
 }
 
-input {
-  color: black;
+.create-project-title {
+  margin-bottom: 0;
 }
 
 .project-select {
   position: relative;
   font-family: Arial;
+  outline: none;
+}
+
+.project-input-form {
+  margin: auto;
+  width: 20rem;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.project-name-input,
+.palette-name-input {
+  height: 1.6rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid whitesmoke;
+  padding-left: 0.5rem;
+  outline: none;
+  width: 12rem;
+  font-size: 0.8rem;
+  padding-bottom: 0.1036rem;
+}
+
+.save-project-btn,
+.save-palette-btn {
+  height: 2rem;
+  background-color: #080808;
+  color: whitesmoke;
+  border-radius: 0.5rem;
+  border: 0.1rem solid whitesmoke;
+  margin-left: -2.8rem;
+  margin-bottom: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.palette-name-input {
+  height: 1.7rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.save-palette-btn {
+  height: 2rem;
+}
+
+.save-project-btn:hover,
+.save-palette-btn:hover {
+  border: 0.1rem solid #080808;
+  background-color: whitesmoke;
+  color: black;
+}
+
+select {
+  height: 2rem;
+  border: 0.1rem solid whitesmoke;
+  font-size: 1rem;
+  width: 10rem;
 }
 
 .project-section {
@@ -61,6 +125,7 @@ li {
   border-radius: 50%;
   display: inline-block;
   border: 0.1rem solid whitesmoke;
+  cursor: pointer;
 }
 
 .color-card {
