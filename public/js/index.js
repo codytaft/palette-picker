@@ -50,9 +50,7 @@ const handleSaveProjectClick = () => {
         if (
           projectName.length &&
           !projects.find(
-            project =>
-              // project => console.log(project.project_name)
-              project.project_name === $('.project-name-input').val()
+            project => project.project_name === $('.project-name-input').val()
           )
         ) {
           saveProjectToDatabase(projectName);
@@ -82,7 +80,7 @@ const displayPaletteIcons = (paletteName, colors, projectName, paletteId) => {
       'beforeend',
       `
       <section class='palette-card'>
-      <h2 id='paletteId'class='palette-name'>${paletteName}</h2>
+      <h2 id='${paletteId}'class='palette-name'>${paletteName}</h2>
       <span class="circle" style='background-color: ${colors[0]}'></span>
       <span class="circle" style='background-color: ${colors[1]}'></span>
       <span class="circle" style='background-color: ${colors[2]}'></span>
